@@ -35,14 +35,14 @@ let currentSlideIndex = 0;
 
 arrowLeft.addEventListener('click', () => {
 	console.log("Tu as cliquer sur la fleche gauche");
-	currentSlideIndex = (currentSlideIndex - 1);
+	currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
 	updateSlide()
 	updateDots();
 });
 
 arrowRight.addEventListener('click', () => {
 	console.log("Tu as cliquer sur la fleche droite");
-	currentSlideIndex = (currentSlideIndex + 1);
+	currentSlideIndex = (currentSlideIndex + 1) % slides.length;
 	updateSlide()
 	updateDots();
 });
@@ -69,6 +69,6 @@ function updateSlide() {
 }
 
 
-/***Création des dots***/
+/***Création des premiers dots***/
 
 updateDots();
