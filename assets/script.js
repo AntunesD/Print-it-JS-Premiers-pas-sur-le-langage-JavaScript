@@ -21,6 +21,8 @@ const slides = [
 
 const arrowLeft = document.querySelector('.arrow_left');
 const arrowRight = document.querySelector('.arrow_right');
+const dotsContainer = document.querySelector('.dots');
+
 
 
 /***Les écouteurs d'evenement pour le clic sur les fleches***/
@@ -32,3 +34,19 @@ arrowLeft.addEventListener('click', () => {
 arrowRight.addEventListener('click', () => {
 	console.log("Tu as cliquer sur la fleche droite");
 });
+
+/***Fonction pour créer les dots ***/
+
+function createDots() {
+
+    for (let i = 0; i < slides.length; i++) {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (i === 0) {
+            dot.classList.add('dot_selected');
+        }
+        dotsContainer.appendChild(dot);
+    }
+}
+
+createDots();
