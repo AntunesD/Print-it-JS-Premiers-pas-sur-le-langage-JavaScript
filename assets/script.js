@@ -1,3 +1,5 @@
+/***Tableaux des images et des texte sur l'image***/
+
 const slides = [
 	{
 		"image": "slide1.jpg",
@@ -19,8 +21,7 @@ const slides = [
 
 /***Appel des elements html***/
 
-const arrowLeft = document.querySelector('.arrow_left');
-const arrowRight = document.querySelector('.arrow_right');
+const arrows = document.querySelectorAll('.arrow');
 const dotsContainer = document.querySelector('.dots');
 const bannerImg = document.querySelector('.banner-img');
 const tagLine = document.querySelector('#banner p');
@@ -31,36 +32,32 @@ const tagLine = document.querySelector('#banner p');
 let currentSlideIndex = 0;
 
 
-/***Les écouteurs d'evenement pour le clic sur les fleches***/
+/***L'écouteur d'evenement pour le clic sur les fleches***/
 
-arrowLeft.addEventListener('click', () => {
-	console.log("Tu as cliquer sur la fleche gauche");
-	currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
-	updateSlide()
-	updateDots();
-});
+arrows.forEach((arrow) => {
+	arrow.addEventListener('click', (event) => {
+		const isArrowLeft = event.target.dataset.side === 'left';
 
-arrowRight.addEventListener('click', () => {
-	console.log("Tu as cliquer sur la fleche droite");
-	currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-	updateSlide()
-	updateDots();
-});
+		if (isArrowLeft) {
+			console.log("Tu as cliqué sur la flèche gauche");
+			currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length;
+		} else {
+			console.log("Tu as cliqué sur la flèche droite");
+			currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+		}
+		
+		updateSlide();
+		updateDots();
+	})
+})
 
 
 /***Fonction pour les dots et les images ***/
 
 function updateDots() {
-	dotsContainer.innerHTML = '';
-
-	for (let i = 0; i < slides.length; i++) {
-		const dot = document.createElement('div');
-		dot.classList.add('dot');
-		if (i === currentSlideIndex) {
-			dot.classList.add('dot_selected');
-		}
-		dotsContainer.appendChild(dot);
-	}
+	const dots = document.querySelectorAll(".dot")
+	document.querySelector(".dot_selected").classList.remove("dot_selected")
+	dots[currentSlideIndex].classList.add("dot_selected")
 }
 
 function updateSlide() {
@@ -71,4 +68,17 @@ function updateSlide() {
 
 /***Création des premiers dots***/
 
-updateDots();
+function createDots() {
+	const fragment = document.createDocumentFragment()
+	for (let i = 0; i < slides.length; i++) {
+		const dot = document.createElement('div');
+		dot.classList.add('dot');
+		if (i === currentSlideIndex) {
+			dot.classList.add('dot_selected');
+		}
+		fragment.appendChild(dot);
+	}
+	dotsContainer.appendChild(fragment)
+}
+
+createDots();
